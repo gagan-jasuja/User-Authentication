@@ -13,7 +13,7 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     db.query(
-      'INSERT INTO usertable (user_name, password) VALUES (?, ?)',
+      'INSERT INTO userTable (user_name, password) VALUES (?, ?)',
       [username, hashedPassword],
       (err) => {
         if (err) return res.status(500).json({ error: 'Database error' });
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    db.query('SELECT * FROM usertable WHERE user_name = ?', [username], async (err, results) => {
+    db.query('SELECT * FROM userTable WHERE user_name = ?', [username], async (err, results) => {
       if (err || results.length === 0) {
         return res.status(401).json({ error: 'Invalid credentials' });
       }
